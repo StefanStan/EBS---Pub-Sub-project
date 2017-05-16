@@ -2,13 +2,19 @@
 EBS final project - pub/sub architecture
 
 Terminology:
-    host machine - ( mostly Windows - machine that is running virtualisation software - VMWare )
-    zkserver     - ( master server running Zookeeper, Nimbus and StormUI )
+
+    host machine - ( mostly Windows - machine that is running virtualisation software - VMWare )    
+    zkserver     - ( master server running Zookeeper, Nimbus and StormUI )    
     workerN      - ( worker server running Supervisor and Logviewer )
----------------------------------------------------------------------------------------------------------  
+
+
+
+---------------------------------------------------------------------------------------------------------    
 
 VMWare port forwarding.
-    We need to forward some ports from host to machines inside VMWare (using VMWare network editor)
+	
+We need to forward some ports from host to machines inside VMWare (using VMWare network editor)
+    
         30000 -> zkserver 22 port (master SSH)
         30001 -> worker1 22 port (worker1 SSH)
         30002 -> worker2 22 port (worker2 SSH)
@@ -20,18 +26,19 @@ VMWare port forwarding.
 ---------------------------------------------------------------------------------------------------------    
 
 Host DNS and port forwarding.
-    1) We need to edit /etc/hosts on host machine (to setup foreach worker)
-	    127.0.0.1        worker1.stefanstan.ro
-	    127.0.0.2        worker2.stefanstan.ro
-	    127.0.0.3        worker3.stefanstan.ro
+   1) We need to edit /etc/hosts on host machine (to setup foreach worker)
+   
+   	127.0.0.1        worker1.stefanstan.ro
+   	127.0.0.2        worker2.stefanstan.ro
+   	127.0.0.3        worker3.stefanstan.ro
         
-    2) Make port forwarding on host so that StormUI logging viewer works
+   2) Make port forwarding on host so that StormUI logging viewer works
     
     netsh interface portproxy add v4tov4 listenport=8000 listenaddress=127.0.0.1 connectport=6701 connectaddress=localhost
     netsh interface portproxy add v4tov4 listenport=8000 listenaddress=127.0.0.2 connectport=6702 connectaddress=localhost
     netsh interface portproxy add v4tov4 listenport=8000 listenaddress=127.0.0.3 connectport=6703 connectaddress=localhost
     
-    6701, 6702 and 6703 ports on local are forwarded inside the workers cluster to each worker port 8000 (see the step before)        
+6701, 6702 and 6703 ports on local are forwarded inside the workers cluster to each worker port 8000 (see the step before)        
         
 ---------------------------------------------------------------------------------------------------------         
         
