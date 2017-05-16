@@ -22,4 +22,4 @@ supervisor         nohup /home/storm/apache-storm-0.9.5/bin/storm supervisor > /
 
 To upload a topology (do this while connected to nimbus machine, master node)
 
-/home/storm/apache-storm-0.9.5/bin/storm jar /home/storm/apache-storm-0.9.5/examples/storm-starter/storm-starter-topologies-0.9.5.jar storm.starter.ExclamationTopology exclamation-topology
+/home/storm/apache-storm-0.9.5/bin/storm jar /home/storm/proiect/ebs-labs-example.jar example.App ebs-labs-count-topology
