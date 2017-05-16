@@ -63,3 +63,12 @@ logviewer    ->      nohup /home/storm/apache-storm-0.9.5/bin/storm logviewer > 
 To upload a topology (do this while connected to nimbus machine, master node)
 
 /home/storm/apache-storm-0.9.5/bin/storm jar /home/storm/proiect/ebs-labs-example.jar example.App ebs-labs-count-topology
+
+---------------------------------------------------------------------------------------------------------
+
+Guides used to set-up linux machines running storm:
+
+https://tecadmin.net/install-python-2-7-on-ubuntu-and-linuxmint/#
+
+http://knowm.org/how-to-install-a-distributed-apache-storm-cluster/
+
