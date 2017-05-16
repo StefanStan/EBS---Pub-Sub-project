@@ -15,6 +15,7 @@ stormui            nohup /home/storm/apache-storm-0.9.5/bin/storm ui > /dev/null
   ON EACH WORKER NODE
   
 supervisor         nohup /home/storm/apache-storm-0.9.5/bin/storm supervisor > /dev/null 2>&1 &
+logviewer          nohup /home/storm/apache-storm-0.9.5/bin/storm logviewer > /dev/null 2>&1 &
 
 
 
