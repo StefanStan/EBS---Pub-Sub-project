@@ -34,7 +34,7 @@ public class App {
             cluster.submitTopology("count_topology", config, builder.createTopology());
 
             try {
-                Thread.sleep(5000);
+                Thread.sleep(25000);
             } catch (InterruptedException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
