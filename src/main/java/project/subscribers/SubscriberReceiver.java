@@ -56,15 +56,15 @@ public class SubscriberReceiver extends BaseRichBolt implements Serializable {
         Runnable runnable = new Runnable(){
             public void run(){
                 String print = "";
-                print += "[" + id + "]";
-                print += "[Subscriber Received Publication]\n";
-                Map<String, Object> pub = publications.get(publications.size() - 1);
-                for(String field : pub.keySet()){
-                    print += field + ":" + pub.get(field).toString() + "\n";
-                }
+                //print += "[" + id + "]";
+                //print += "[Subscriber Received Publication]\n";
+                //Map<String, Object> pub = publications.get(publications.size() - 1);
+                //for(String field : pub.keySet()){
+                //    print += field + ":" + pub.get(field).toString() + "\n";
+                //}
                 double latency = getMediumReceiveLatency(new ArrayList<>(publications));
                 print += "[" + id + "] {Latency:" + latency + ", ReceivedPublicationsCount:" + publications.size() + "}\n";
-                print += "---------------------------------";
+                //print += "---------------------------------";
                 System.out.println(print);
             }
         };

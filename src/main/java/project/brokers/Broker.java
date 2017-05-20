@@ -16,6 +16,7 @@ import java.util.*;
  * Created by Vasile Pojoga on 5/19/17.
  */
 public class Broker extends BaseRichBolt implements Serializable {
+    private static final String SUBSCRIPTION_FORWARD_ID = "subscription_forward";
     private OutputCollector collector;
     private Map<String, List<Subscription>> subscriptions = new HashMap<>();
     private List<String> subscriberReceivers = new ArrayList<>();
@@ -29,6 +30,10 @@ public class Broker extends BaseRichBolt implements Serializable {
 
     @Override
     public void execute(Tuple tuple) {
+        if(tuple.getSourceTask() == this.id){
+            return;
+        }
+
         if(tuple.getFields().contains("subscription")){
             Object subscription = tuple.getValueByField("subscription");
             Object subscriberReceiverId = tuple.getValueByField("subscriberReceiverId");
@@ -44,6 +49,9 @@ public class Broker extends BaseRichBolt implements Serializable {
 
                 subscriptions.add(sub);
                 this.subscriptions.put(subscriberReceiverId.toString(), subscriptions);
+                if(!tuple.getSourceStreamId().equals(SUBSCRIPTION_FORWARD_ID)){
+                    this.collector.emit(SUBSCRIPTION_FORWARD_ID, tuple, new Values(sub, subscriberReceiverId));
+                }
             }
         }
 
@@ -63,6 +71,7 @@ public class Broker extends BaseRichBolt implements Serializable {
 
     @Override
     public void declareOutputFields(OutputFieldsDeclarer outputFieldsDeclarer) {
+        outputFieldsDeclarer.declareStream(SUBSCRIPTION_FORWARD_ID, new Fields("subscription", "subscriberReceiverId"));
         for(String subscriberReceiverId : this.subscriberReceivers){
             outputFieldsDeclarer.declareStream(subscriberReceiverId, new Fields("publication"));
         }

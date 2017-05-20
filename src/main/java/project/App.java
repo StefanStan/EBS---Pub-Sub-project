@@ -17,6 +17,7 @@ public class App {
 
     private static final String PUBLISHER_SPOUT_ID = "publisher";
     private static final String BROKER_BOLT_ID = "broker";
+    private static final String SUBSCRIPTION_FORWARD_ID = "subscription_forward";
     private static final String SUBSCRIBER_RECEIVER_BOLT_ID = "subscriber_receiver_";
     private static final String SUBSCRIBER_SENDER_SPOUT_ID = "subscriber_sender_";
 
@@ -35,7 +36,7 @@ public class App {
             SubscriberSender subscriberSender = new SubscriberSender(subscriberReceiverBoltId);
 
             builder.setSpout(subscriberSenderSpoutId, subscriberSender);
-            brokerBoltDeclarer.allGrouping(subscriberSenderSpoutId);
+            brokerBoltDeclarer.shuffleGrouping(subscriberSenderSpoutId);
 
             broker.addSubscriberReceiverId(subscriberReceiverBoltId);
             builder.setBolt(subscriberReceiverBoltId, subscriberReceiver, 1)
@@ -43,6 +44,7 @@ public class App {
         }
 
         brokerBoltDeclarer.shuffleGrouping(PUBLISHER_SPOUT_ID);
+        brokerBoltDeclarer.allGrouping(BROKER_BOLT_ID, SUBSCRIPTION_FORWARD_ID);
 
         Config config = new Config();
         config.setNumWorkers(3);
