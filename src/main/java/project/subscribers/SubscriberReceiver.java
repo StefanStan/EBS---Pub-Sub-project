@@ -42,12 +42,6 @@ public class SubscriberReceiver extends BaseRichBolt implements Serializable {
         Object publication = tuple.getValueByField("publication");
         if((publication != null) && (publication instanceof HashMap)){
             HashMap<String, Object> pub = (HashMap<String, Object>)publication;
-            System.out.print("[" + this.id + "]");
-            System.out.println("[Subscriber Received Publication]");
-            for(String field : pub.keySet()){
-                System.out.println(field + ":" + pub.get(field).toString());
-            }
-            System.out.println("---------------------------------");
             //Always add PUBLICATION_RECEIVED_DATE_TIME_FIELD_ID with current time as value to publications, for monitoring reasons!
             pub.put(PUBLICATION_RECEIVED_DATE_TIME_FIELD_ID, LocalDateTime.now());
             this.receivedPublications.add(pub);
@@ -61,8 +55,17 @@ public class SubscriberReceiver extends BaseRichBolt implements Serializable {
     private Runnable createRunnable(final String id, final List<Map<String, Object>> publications){
         Runnable runnable = new Runnable(){
             public void run(){
+                String print = "";
+                print += "[" + id + "]";
+                print += "[Subscriber Received Publication]\n";
+                Map<String, Object> pub = publications.get(publications.size() - 1);
+                for(String field : pub.keySet()){
+                    print += field + ":" + pub.get(field).toString() + "\n";
+                }
                 double latency = getMediumReceiveLatency(new ArrayList<>(publications));
-                System.out.println("[" + id + "] {Latency:" + latency + ", ReceivedPublicationsCount:" + publications.size() + "}");
+                print += "[" + id + "] {Latency:" + latency + ", ReceivedPublicationsCount:" + publications.size() + "}\n";
+                print += "---------------------------------";
+                System.out.println(print);
             }
         };
 

@@ -36,7 +36,7 @@ public class SubscriberSender extends BaseRichSpout implements Serializable {
         if(this.currentIndex < this.subscriptionCount){
             this.currentIndex++;
             Subscription subscription = new Subscription();
-            //subscription.addField("Name", "=", UUID.randomUUID().toString());
+            subscription.addField("Name", "!=", UUID.randomUUID().toString());
             subscription.addField("Age", ">", (int)(Math.random() * 100));
             this.collector.emit(new Values(subscription, this.subscriberReceiverId));
         }
