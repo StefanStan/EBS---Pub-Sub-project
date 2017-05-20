@@ -8,6 +8,7 @@ import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
 import project.Subscription;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
@@ -15,7 +16,7 @@ import java.util.UUID;
 /**
  * Created by Vasile Pojoga on 5/19/17.
  */
-public class SubscriberSender extends BaseRichSpout {
+public class SubscriberSender extends BaseRichSpout implements Serializable {
     private SpoutOutputCollector collector;
     private int subscriptionCount = 1;
     private int currentIndex = 0;

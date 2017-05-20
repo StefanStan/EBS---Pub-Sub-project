@@ -9,12 +9,13 @@ import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
 import project.Subscription;
 
+import java.io.Serializable;
 import java.util.*;
 
 /**
  * Created by Vasile Pojoga on 5/19/17.
  */
-public class Broker extends BaseRichBolt {
+public class Broker extends BaseRichBolt implements Serializable {
     private OutputCollector collector;
     private Map<String, List<Subscription>> subscriptions = new HashMap<>();
     private List<String> subscriberReceivers = new ArrayList<>();

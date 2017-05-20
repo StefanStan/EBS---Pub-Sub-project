@@ -1,6 +1,7 @@
 package project;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 
 /**
@@ -32,32 +33,86 @@ public class SubscriptionField implements Serializable {
         return applyOperation(value, this.operator, this.value);
     }
 
-    private boolean applyOperation(Object value1, String operator, Object value2) {
-        boolean result = false;
-        switch (operator){
-            case "=":
-                result = value1.equals(value2);
-                break;
-            case "!=":
-                result = !value1.equals(value2);
-                break;
-            case ">":
-                result = (int)value1 > (int)value2;
-                break;
-            case ">=":
-                result = (int)value1 >= (int)value2;
-                break;
-            case "<":
-                result = (int)value1 < (int)value2;
-                break;
-            case "<=":
-                result = (int)value1 <= (int)value2;
-                break;
-            default:
-                result = false;
-                break;
+    private static boolean applyOperation(Object value1, String operator, Object value2) {
+        if(value1 instanceof Integer){
+            if(!(value2 instanceof Integer)){
+                return false;
+            }
+
+            return compareInt((int)value1, operator, (int)value2);
+        }
+        else if(value1 instanceof String){
+            if(!(value2 instanceof String)){
+                return false;
+            }
+
+            return compareString((String)value1, operator, (String)value2);
+        }
+        else if(value1 instanceof LocalDateTime){
+            if(!(value2 instanceof LocalDateTime)){
+                return false;
+            }
+
+            return compareDateTime((LocalDateTime)value1, operator, (LocalDateTime)value2);
         }
 
-        return result;
+        return false;
+    }
+
+    private static boolean compareInt(int value1, String operator, int value2){
+        switch (operator){
+            case "=":
+                return value1 == value2;
+            case "!=":
+                return value1 != value2;
+            case "<":
+                return value1 < value2;
+            case "<=":
+                return value1 <= value2;
+            case ">":
+                return value1 > value2;
+            case ">=":
+                return value1 >= value2;
+            default:
+                return false;
+        }
+    }
+
+    private static boolean compareString(String value1, String operator, String value2){
+        switch (operator){
+            case "=":
+                return value1.equals(value2);
+            case "!=":
+                return !value1.equals(value2);
+            case "<":
+                return value1.compareTo(value2) < 0;
+            case "<=":
+                return value1.compareTo(value2) <= 0;
+            case ">":
+                return value1.compareTo(value2) > 0;
+            case ">=":
+                return value1.compareTo(value2) >= 0;
+            default:
+                return false;
+        }
+    }
+
+    private static boolean compareDateTime(LocalDateTime value1, String operator, LocalDateTime value2){
+        switch (operator){
+            case "=":
+                return value1.equals(value2);
+            case "!=":
+                return !value1.equals(value2);
+            case "<":
+                return value1.compareTo(value2) < 0;
+            case "<=":
+                return value1.compareTo(value2) <= 0;
+            case ">":
+                return value1.compareTo(value2) > 0;
+            case ">=":
+                return value1.compareTo(value2) >= 0;
+            default:
+                return false;
+        }
     }
 }
