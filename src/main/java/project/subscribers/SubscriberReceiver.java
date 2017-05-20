@@ -14,6 +14,12 @@ import java.util.Map;
  */
 public class SubscriberReceiver extends BaseRichBolt {
     private OutputCollector collector;
+    private String id;
+
+    public SubscriberReceiver(String id){
+        this.id = id;
+    }
+
 
     @Override
     public void prepare(Map map, TopologyContext topologyContext, OutputCollector outputCollector) {
@@ -25,6 +31,7 @@ public class SubscriberReceiver extends BaseRichBolt {
         Object publication = tuple.getValueByField("publication");
         if((publication != null) && (publication instanceof HashMap)){
             HashMap<String, Object> pub = (HashMap<String, Object>)publication;
+            System.out.print("[" + this.id + "]");
             System.out.println("[Subscriber Received Publication]");
             for(String field : pub.keySet()){
                 System.out.println(field + ":" + pub.get(field).toString());

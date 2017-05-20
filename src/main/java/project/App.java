@@ -2,6 +2,8 @@ package project;
 import backtype.storm.Config;
 import backtype.storm.LocalCluster;
 import backtype.storm.StormSubmitter;
+import backtype.storm.topology.BoltDeclarer;
+import backtype.storm.topology.SpoutDeclarer;
 import backtype.storm.topology.TopologyBuilder;
 import project.brokers.Broker;
 import project.publishers.Publisher;
@@ -15,20 +17,32 @@ public class App {
 
     private static final String PUBLISHER_SPOUT_ID = "publisher";
     private static final String BROKER_BOLT_ID = "broker";
-    private static final String SUBSCRIBER_RECEIVER_BOLT_ID = "subscriber_receiver";
-    private static final String SUBSCRIBER_SENDER_BOLT_ID = "subscriber_sender";
+    private static final String SUBSCRIBER_RECEIVER_BOLT_ID = "subscriber_receiver_";
+    private static final String SUBSCRIBER_SENDER_SPOUT_ID = "subscriber_sender_";
 
     public static void main( String[] args ) throws Exception {
         TopologyBuilder builder = new TopologyBuilder();
         Publisher publisher = new Publisher();
         Broker broker = new Broker();
-        SubscriberReceiver subscriberReceiver = new SubscriberReceiver();
-        SubscriberSender subscriberSender = new SubscriberSender();
 
         builder.setSpout(PUBLISHER_SPOUT_ID, publisher, 1);
-        builder.setBolt(BROKER_BOLT_ID, broker, 1).shuffleGrouping(SUBSCRIBER_SENDER_BOLT_ID).shuffleGrouping(PUBLISHER_SPOUT_ID);
-        builder.setBolt(SUBSCRIBER_RECEIVER_BOLT_ID, subscriberReceiver, 1).shuffleGrouping(BROKER_BOLT_ID);
-        builder.setSpout(SUBSCRIBER_SENDER_BOLT_ID, subscriberSender);
+        BoltDeclarer brokerBoltDeclarer = builder.setBolt(BROKER_BOLT_ID, broker, 3);
+
+        for(int i=1;i<=3;i++){
+            String subscriberReceiverBoltId = SUBSCRIBER_RECEIVER_BOLT_ID + Integer.toString(i);
+            String subscriberSenderSpoutId = SUBSCRIBER_SENDER_SPOUT_ID + Integer.toString(i);
+            SubscriberReceiver subscriberReceiver = new SubscriberReceiver(subscriberReceiverBoltId);
+            SubscriberSender subscriberSender = new SubscriberSender(subscriberReceiverBoltId);
+
+            builder.setSpout(subscriberSenderSpoutId, subscriberSender);
+            brokerBoltDeclarer.allGrouping(subscriberSenderSpoutId);
+
+            broker.addSubscriberReceiverId(subscriberReceiverBoltId);
+            builder.setBolt(subscriberReceiverBoltId, subscriberReceiver, 1)
+                    .shuffleGrouping(BROKER_BOLT_ID, subscriberReceiverBoltId);
+        }
+
+        brokerBoltDeclarer.shuffleGrouping(PUBLISHER_SPOUT_ID);
 
         Config config = new Config();
         config.setNumWorkers(3);

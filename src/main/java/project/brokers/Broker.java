@@ -17,28 +17,32 @@ import java.util.*;
 public class Broker extends BaseRichBolt {
     private OutputCollector collector;
     private Map<String, List<Subscription>> subscriptions = new HashMap<>();
+    private List<String> subscriberReceivers = new ArrayList<>();
+    private int id;
 
     @Override
     public void prepare(Map map, TopologyContext topologyContext, OutputCollector outputCollector) {
         this.collector = outputCollector;
+        this.id = topologyContext.getThisTaskId();
     }
 
     @Override
     public void execute(Tuple tuple) {
         if(tuple.getFields().contains("subscription")){
             Object subscription = tuple.getValueByField("subscription");
+            Object subscriberReceiverId = tuple.getValueByField("subscriberReceiverId");
             if((subscription != null) && (subscription instanceof Subscription)){
                 Subscription sub = (Subscription)subscription;
                 List<Subscription> subscriptions;
-                if(this.subscriptions.containsKey(tuple.getSourceStreamId())){
-                    subscriptions = this.subscriptions.get(tuple.getSourceStreamId());
+                if(this.subscriptions.containsKey(subscriberReceiverId.toString())){
+                    subscriptions = this.subscriptions.get(subscriberReceiverId.toString());
                 }
                 else{
                     subscriptions = new ArrayList<>();
                 }
 
                 subscriptions.add(sub);
-                this.subscriptions.put(tuple.getSourceStreamId(), subscriptions);
+                this.subscriptions.put(subscriberReceiverId.toString(), subscriptions);
             }
         }
 
@@ -58,7 +62,13 @@ public class Broker extends BaseRichBolt {
 
     @Override
     public void declareOutputFields(OutputFieldsDeclarer outputFieldsDeclarer) {
-        outputFieldsDeclarer.declare(new Fields("publication"));
+        for(String subscriberReceiverId : this.subscriberReceivers){
+            outputFieldsDeclarer.declareStream(subscriberReceiverId, new Fields("publication"));
+        }
+    }
+
+    public void addSubscriberReceiverId(String subscriberReceiverId){
+        this.subscriberReceivers.add(subscriberReceiverId);
     }
 
     private List<String> getMatchingSubscriberIds(HashMap<String, Object> publication){

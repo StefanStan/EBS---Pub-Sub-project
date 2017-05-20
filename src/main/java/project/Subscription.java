@@ -1,5 +1,6 @@
 package project;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,7 +8,7 @@ import java.util.List;
 /**
  * Created by Vasile Pojoga on 5/19/17.
  */
-public class Subscription {
+public class Subscription implements Serializable {
     public List<SubscriptionField> fields;
 
     public Subscription(){

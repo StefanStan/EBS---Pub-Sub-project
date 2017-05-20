@@ -17,8 +17,13 @@ import java.util.UUID;
  */
 public class SubscriberSender extends BaseRichSpout {
     private SpoutOutputCollector collector;
-    private int subscriptionCount = 10;
-    private int currentIndex= 0;
+    private int subscriptionCount = 1;
+    private int currentIndex = 0;
+    private String subscriberReceiverId;
+
+    public SubscriberSender(String subscriberReceiverId){
+        this.subscriberReceiverId = subscriberReceiverId;
+    }
 
     @Override
     public void open(Map map, TopologyContext topologyContext, SpoutOutputCollector spoutOutputCollector) {
@@ -32,12 +37,12 @@ public class SubscriberSender extends BaseRichSpout {
             Subscription subscription = new Subscription();
             //subscription.addField("Name", "=", UUID.randomUUID().toString());
             subscription.addField("Age", ">", (int)(Math.random() * 100));
-            this.collector.emit(new Values(subscription));
+            this.collector.emit(new Values(subscription, this.subscriberReceiverId));
         }
     }
 
     @Override
     public void declareOutputFields(OutputFieldsDeclarer outputFieldsDeclarer) {
-        outputFieldsDeclarer.declare(new Fields("subscription"));
+        outputFieldsDeclarer.declare(new Fields("subscription", "subscriberReceiverId"));
     }
 }

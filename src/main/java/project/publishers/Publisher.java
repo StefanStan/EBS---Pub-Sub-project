@@ -6,6 +6,7 @@ import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.base.BaseRichSpout;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
+import backtype.storm.utils.Utils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,6 +27,7 @@ public class Publisher extends BaseRichSpout {
 
     @Override
     public void nextTuple() {
+        Utils.sleep(5000);
         if(this.currentIndex < this.publicationCount){
             this.currentIndex++;
             Map<String, Object> publication = new HashMap<>();

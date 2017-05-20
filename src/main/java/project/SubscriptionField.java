@@ -1,11 +1,12 @@
 package project;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 /**
  * Created by Vasile Pojoga on 5/19/17.
  */
-public class SubscriptionField {
+public class SubscriptionField implements Serializable {
     public String field;
     public String operator;
     public Object value;
