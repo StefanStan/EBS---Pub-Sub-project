@@ -1,8 +1,13 @@
 package project;
 
+import project.generator.Generator;
+import project.generator.domain.*;
+
+import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by Vasile Pojoga on 5/19/17.
@@ -16,6 +21,15 @@ public class SubscriptionField implements Serializable {
         this.field = field;
         this.operator = operator;
         this.value = value;
+    }
+
+    public static void main(String[] args) throws IOException {
+        Generator gen = new Generator();
+
+        List<Publication> pubs = gen.generatePublications();
+        List<project.generator.domain.Subscription> subs = gen.generateSubscription(100);
+
+        int x = 9;
     }
 
     public SubscriptionField(){
@@ -55,8 +69,34 @@ public class SubscriptionField implements Serializable {
 
             return compareDateTime((LocalDateTime)value1, operator, (LocalDateTime)value2);
         }
+        else if(value1 instanceof Double) {
+            if(!(value2 instanceof Double)) {
+                return false;
+            }
+
+            return compareDouble((Double) value1, operator, (Double) value2);
+        }
 
         return false;
+    }
+
+    private static boolean compareDouble(Double value1, String operator, Double value2) {
+        switch (operator) {
+            case "=":
+                return value1 == value2;
+            case "!=":
+                return value1 != value2;
+            case "<":
+                return value1 < value2;
+            case "<=":
+                return value1 <= value2;
+            case ">":
+                return value1 > value2;
+            case ">=":
+                return value1 >= value2;
+            default:
+                return false;
+        }
     }
 
     private static boolean compareInt(int value1, String operator, int value2){

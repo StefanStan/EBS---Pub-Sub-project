@@ -1,0 +1,9 @@
+Red
+Blue
+Green
+Orange
+Pink
+Grey
+Brown
+Yellow
+Violet

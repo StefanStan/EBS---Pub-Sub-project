@@ -1,0 +1,80 @@
+﻿{
+	TotalNumberOfMessages: 1000,
+	Fields:
+	[
+		{
+			Name: "PatientName",
+			Type: "String",
+			Values:
+			{
+				Source: "File",
+				Path: "Names.txt"
+			},
+			FrequencyInSubscriptions: 100,
+			OperationsFrequency:
+			{
+				"EQ": 80,
+				"LTE": 20
+			}
+		},
+		{
+			Name: "DateOfBirth",
+			Type: "DateTime",
+			Values:
+			{
+				Source: "Interval",
+				Start: "01.01.1900",
+				End: "01.01.2017"
+			},
+			FrequencyInSubscriptions: 40,
+			OperationsFrequency:
+			{
+				"LTE": 75
+			}
+		},
+		{
+			Name: "Height",
+			Type: "Double",
+			Values:
+			{
+				Source: "Interval",
+				Start: 1.00,
+				End: 2.99
+			},
+			FrequencyInSubscriptions: 100,
+			OperationsFrequency:
+			{
+				"GTE": 100
+			}
+		},
+		{
+			Name: "EyeColor",
+			Type: "String",
+			Values:
+			{
+				Source: "File",
+				Path: "Colors.txt"
+			},
+			FrequencyInSubscriptions: 5,
+			OperationsFrequency:
+			{
+				"EQ": 30
+			}
+		},
+		{
+			Name: "HeartRate",
+			Type: "Int",
+			Values:
+			{
+				Source: "Interval",
+				Start: 30,
+				End: 150
+			},
+			FrequencyInSubscriptions: 70,
+			OperationsFrequency:
+			{
+				"GTE": 85
+			}
+		}
+	]
+}
