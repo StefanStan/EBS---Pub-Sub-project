@@ -13,8 +13,7 @@
 			FrequencyInSubscriptions: 100,
 			OperationsFrequency:
 			{
-				"EQ": 80,
-				"LTE": 20
+				"EQ": 100
 			}
 		},
 		{
@@ -23,13 +22,14 @@
 			Values:
 			{
 				Source: "Interval",
-				Start: "01.01.1900",
-				End: "01.01.2017"
+				Start: "1900-01-01T00:00:00",
+				End: "2017-01-01T00:00:00"
 			},
-			FrequencyInSubscriptions: 40,
+			FrequencyInSubscriptions: 50,
 			OperationsFrequency:
 			{
-				"LTE": 75
+				"LTE": 60,
+				"GT": 40
 			}
 		},
 		{
@@ -55,10 +55,10 @@
 				Source: "File",
 				Path: "Colors.txt"
 			},
-			FrequencyInSubscriptions: 5,
+			FrequencyInSubscriptions: 40,
 			OperationsFrequency:
 			{
-				"EQ": 30
+				"EQ": 100
 			}
 		},
 		{
@@ -73,7 +73,8 @@
 			FrequencyInSubscriptions: 70,
 			OperationsFrequency:
 			{
-				"GTE": 85
+				"GTE": 85,
+				"LT": 15
 			}
 		}
 	]

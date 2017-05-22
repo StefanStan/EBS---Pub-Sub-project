@@ -13,6 +13,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -157,13 +160,16 @@ public class Generator {
         return r.nextInt(rangeMax-rangeMin + 1) + rangeMin;
     }
 
-    private Date getRandomDate(String start, String end) throws ParseException {
-        Date rangeMin = new SimpleDateFormat("dd.MM.yyyy").parse(start);
-        Date rangeMax = new SimpleDateFormat("dd.MM.yyyy").parse(end);
+    private LocalDateTime getRandomDate(String start, String end) throws ParseException {
+        LocalDateTime rangeMin = LocalDateTime.parse(start);
+        LocalDateTime rangeMax = LocalDateTime.parse(end);
+        long rangeMaxTime = rangeMax.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+        long rangeMinTime = rangeMin.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli();
+
 
         Random random = new Random();
-        long randomValue = nextLong(random,rangeMax.getTime() - rangeMin.getTime() + 1) + rangeMin.getTime();
-        return new Date(randomValue);
+        long randomValue = nextLong(random, rangeMaxTime - rangeMinTime + 1) + rangeMinTime;
+        return Instant.ofEpochMilli(randomValue).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
     private String readFromFile(String filePath) throws IOException {

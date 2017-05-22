@@ -75,7 +75,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>example.App</mainClass>
+                            <mainClass>proiect.App</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

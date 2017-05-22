@@ -33,9 +33,6 @@ public class Publisher extends BaseRichSpout implements Serializable {
         try {
             Generator gen = new Generator();
             this.generatedPubs = gen.generatePublications();
-            for(Publication temp : generatedPubs) {
-                temp.getFields().put(PUBLICATION_DATE_TIME_FIELD_ID, LocalDateTime.now());
-            }
             this.publicationCount = this.generatedPubs.size();
 
         } catch (IOException e) {
@@ -55,6 +52,7 @@ public class Publisher extends BaseRichSpout implements Serializable {
     public void nextTuple() {
         Utils.sleep(5000);
         while(this.currentIndex < this.publicationCount){
+            this.generatedPubs.get(currentIndex).getFields().put(PUBLICATION_DATE_TIME_FIELD_ID, LocalDateTime.now());
             this.collector.emit(new Values(this.generatedPubs.get(currentIndex).getFields()));
             this.currentIndex++;
         }
