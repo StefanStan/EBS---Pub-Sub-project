@@ -75,6 +75,8 @@ public class Generator {
 
     private void populateGenConfig() throws IOException {
         String content = readFile(configPath + "Config.json", Charset.defaultCharset());
+        //  the fucking fix; read process was reading
+        content = content.substring(content.indexOf("{"), content.length());
         Gson g = new Gson();
         config = g.fromJson(content, GeneratorConfig.class);
     }
