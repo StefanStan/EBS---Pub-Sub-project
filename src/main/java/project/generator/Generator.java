@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
  */
 public class Generator {
 
-    public static String configPath = "";
+    public static String configPath = null;
 
     private GeneratorConfig config;
 
@@ -74,7 +74,7 @@ public class Generator {
     }
 
     private void populateGenConfig() throws IOException {
-        String content = readFile(configPath + "Config.json", Charset.defaultCharset());
+        String content = readFile(configPath != null ? configPath + "Config.json" : "/home/storm/project/EBS---Pub-Sub-project/Config.json", Charset.defaultCharset());
         //  the fucking fix; read process was reading
         content = content.substring(content.indexOf("{"), content.length());
         Gson g = new Gson();
@@ -177,7 +177,7 @@ public class Generator {
     }
 
     private String readFromFile(String fileName) throws IOException {
-        List<String> lines = getLinesFromFile(configPath + fileName);
+        List<String> lines = getLinesFromFile(configPath != null ? configPath + fileName : "/home/storm/project/EBS---Pub-Sub-project/" + fileName);
         int index = getRandomInt("0", String.valueOf(lines.size()-1));
 
         return lines.get(index);

@@ -50,13 +50,21 @@ public class App {
         Config config = new Config();
         config.setNumWorkers(3);
 
-        if (args != null && args.length > 1) {
-            Generator.configPath = args[0];
+        boolean runRemote = false;
+
+        if (args != null && args.length == 1) {
+            runRemote = Boolean.parseBoolean(args[0]);
+            Generator.configPath = null;
+        } else if (args != null && args.length == 2) {
+            runRemote = Boolean.parseBoolean(args[0]);
+            Generator.configPath = args[1];
+        }
+
+        if (runRemote) {
             StormSubmitter.submitTopology(args[1], config, builder.createTopology());
-        } else if(args != null && args.length == 1) {
-            Generator.configPath = args[0];
+        } else {
             LocalCluster cluster = new LocalCluster();
-            cluster.submitTopology("PubSub_topology", config, builder.createTopology());
+            cluster.submitTopology("ebs-pub-sub-topology", config, builder.createTopology());
 
             try {
                 Thread.sleep(5 * 60 * 1000);
@@ -64,7 +72,7 @@ public class App {
                 e.printStackTrace();
             }
 
-            cluster.killTopology("PubSub_topology");
+            cluster.killTopology("ebs-pub-sub-topology");
             cluster.shutdown();
         }
     }
