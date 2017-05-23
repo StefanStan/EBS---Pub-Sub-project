@@ -6,6 +6,7 @@ import backtype.storm.topology.BoltDeclarer;
 import backtype.storm.topology.SpoutDeclarer;
 import backtype.storm.topology.TopologyBuilder;
 import project.brokers.Broker;
+import project.generator.Generator;
 import project.publishers.Publisher;
 import project.subscribers.SubscriberReceiver;
 import project.subscribers.SubscriberSender;
@@ -49,9 +50,11 @@ public class App {
         Config config = new Config();
         config.setNumWorkers(3);
 
-        if (args != null && args.length > 0) {
-            StormSubmitter.submitTopology(args[0], config, builder.createTopology());
-        } else {
+        if (args != null && args.length > 1) {
+            Generator.configPath = args[0];
+            StormSubmitter.submitTopology(args[1], config, builder.createTopology());
+        } else if(args != null && args.length == 1) {
+            Generator.configPath = args[0];
             LocalCluster cluster = new LocalCluster();
             cluster.submitTopology("PubSub_topology", config, builder.createTopology());
 

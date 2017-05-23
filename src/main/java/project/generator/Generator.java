@@ -24,6 +24,8 @@ import java.util.stream.Collectors;
  */
 public class Generator {
 
+    public static String configPath = "";
+
     private GeneratorConfig config;
 
     public Generator() throws IOException {
@@ -72,7 +74,7 @@ public class Generator {
     }
 
     private void populateGenConfig() throws IOException {
-        String content = readFile("Config.json", Charset.defaultCharset());
+        String content = readFile(configPath + "Config.json", Charset.defaultCharset());
         Gson g = new Gson();
         config = g.fromJson(content, GeneratorConfig.class);
     }
@@ -172,8 +174,8 @@ public class Generator {
         return Instant.ofEpochMilli(randomValue).atZone(ZoneId.systemDefault()).toLocalDateTime();
     }
 
-    private String readFromFile(String filePath) throws IOException {
-        List<String> lines = getLinesFromFile(filePath);
+    private String readFromFile(String fileName) throws IOException {
+        List<String> lines = getLinesFromFile(configPath + fileName);
         int index = getRandomInt("0", String.valueOf(lines.size()-1));
 
         return lines.get(index);
