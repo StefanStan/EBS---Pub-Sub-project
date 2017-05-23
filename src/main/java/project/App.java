@@ -61,7 +61,7 @@ public class App {
         }
 
         if (runRemote) {
-            StormSubmitter.submitTopology(args[1], config, builder.createTopology());
+            StormSubmitter.submitTopology("ebs-pub-sub-topology", config, builder.createTopology());
         } else {
             LocalCluster cluster = new LocalCluster();
             cluster.submitTopology("ebs-pub-sub-topology", config, builder.createTopology());
