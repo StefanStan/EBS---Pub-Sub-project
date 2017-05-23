@@ -25,7 +25,7 @@
 				"Start": "1900-01-01T00:00:00",
 				"End": "2017-01-01T00:00:00"
 			},
-			"FrequencyInSubscriptions": "50",
+			"FrequencyInSubscriptions": "0",
 			"OperationsFrequency":
 			{
 				"LTE": "60",
@@ -38,10 +38,10 @@
 			"Values":
 			{
 				"Source": "Interval",
-				"Start": "1.00",
-				"End": "2.99"
+				"Start": "1.20",
+				"End": "2.10"
 			},
-			"FrequencyInSubscriptions": "100",
+			"FrequencyInSubscriptions": "0",
 			"OperationsFrequency":
 			{
 				"GTE": "100"
@@ -55,7 +55,7 @@
 				"Source": "File",
 				"Path": "Colors.txt"
 			},
-			"FrequencyInSubscriptions": "40",
+			"FrequencyInSubscriptions": "0",
 			"OperationsFrequency":
 			{
 				"EQ": "100"
@@ -70,7 +70,7 @@
 				"Start": "30",
 				"End": "150"
 			},
-			"FrequencyInSubscriptions": "70",
+			"FrequencyInSubscriptions": "0",
 			"OperationsFrequency":
 			{
 				"GTE": "85",

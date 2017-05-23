@@ -20,7 +20,7 @@ import java.util.*;
  */
 public class SubscriberSender extends BaseRichSpout implements Serializable {
     private SpoutOutputCollector collector;
-    private int subscriptionCount = 100;
+    private int subscriptionCount = 1;
     private int currentIndex = 0;
     private String subscriberReceiverId;
 

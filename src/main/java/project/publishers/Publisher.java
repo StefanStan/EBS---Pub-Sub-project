@@ -22,7 +22,7 @@ public class Publisher extends BaseRichSpout implements Serializable {
     private static String PUBLICATION_DATE_TIME_FIELD_ID = "__PublicationSendDateTime";
 
     private SpoutOutputCollector collector;
-    private int publicationCount = 30000;
+    private int publicationCount = 10;
     private int currentIndex= 0;
 
     private List<Publication> generatedPubs = new ArrayList<>();
