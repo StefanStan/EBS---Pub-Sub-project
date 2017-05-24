@@ -35,7 +35,7 @@ public class Generator {
     public List<Publication> generatePublications() {
         List<Publication> pubs = new ArrayList<>();
 
-        for(int i = 0; i < config.getTotalNumberOfMessages(); i++){
+        for(int i = 0; i < this.config.getTotalNumberOfPubs(); i++){
             Map<String, Object> pubFields = new HashMap<>();
             for (ConfigObj obj : config.getFields()) {
                 try {
@@ -50,10 +50,10 @@ public class Generator {
         return pubs;
     }
 
-    public List<Subscription> generateSubscription(int nr) {
+    public List<Subscription> generateSubscription() {
         List<Subscription> subs = new ArrayList<>();
 
-        for(int i = 0; i < nr; i++){
+        for(int i = 0; i < this.config.getTotalNumberOfSubs(); i++){
             Map<String, MyPair> subFields = new HashMap<>();
             for (ConfigObj obj : config.getFields()) {
                 MyPair pair = null;

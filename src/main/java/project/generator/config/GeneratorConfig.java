@@ -8,7 +8,8 @@ import java.util.List;
  */
 public class GeneratorConfig {
 
-    private long TotalNumberOfMessages;
+    private long TotalNumberOfPubs;
+    private long TotalNumberOfSubs;
     private List<ConfigObj> Fields;
 
     public GeneratorConfig() throws IOException {}
@@ -22,12 +23,20 @@ public class GeneratorConfig {
         return null;
     }
 
-    public long getTotalNumberOfMessages() {
-        return this.TotalNumberOfMessages;
+    public long getTotalNumberOfPubs() {
+        return this.TotalNumberOfPubs;
     }
 
-    public void setTotalNumberOfMessages(long totalNumberOfMessages) {
-        TotalNumberOfMessages = totalNumberOfMessages;
+    public void setTotalNumberOfPubs(long totalNumberOfPubs) {
+        TotalNumberOfPubs = totalNumberOfPubs;
+    }
+
+    public long getTotalNumberOfSubs() {
+        return this.TotalNumberOfSubs;
+    }
+
+    public void setTotalNumberOfSubs(long totalNumberOfSubs) {
+        TotalNumberOfSubs = totalNumberOfSubs;
     }
 
     public List<ConfigObj> getFields() {

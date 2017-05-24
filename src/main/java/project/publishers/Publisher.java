@@ -13,7 +13,11 @@ import project.generator.domain.Publication;
 import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by Vasile Pojoga on 5/19/17.
@@ -22,7 +26,7 @@ public class Publisher extends BaseRichSpout implements Serializable {
     private static String PUBLICATION_DATE_TIME_FIELD_ID = "__PublicationSendDateTime";
 
     private SpoutOutputCollector collector;
-    private int publicationCount = 10;
+    private int publicationCount;
     private int currentIndex= 0;
 
     private List<Publication> generatedPubs = new ArrayList<>();

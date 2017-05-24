@@ -11,6 +11,8 @@ import project.publishers.Publisher;
 import project.subscribers.SubscriberReceiver;
 import project.subscribers.SubscriberSender;
 
+import java.io.File;
+
 /**
  * Created by Vasile Pojoga on 5/14/2017.
  */

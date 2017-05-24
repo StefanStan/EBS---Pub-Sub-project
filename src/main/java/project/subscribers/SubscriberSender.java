@@ -20,7 +20,7 @@ import java.util.*;
  */
 public class SubscriberSender extends BaseRichSpout implements Serializable {
     private SpoutOutputCollector collector;
-    private int subscriptionCount = 1;
+    private int subscriptionCount;
     private int currentIndex = 0;
     private String subscriberReceiverId;
 
@@ -35,7 +35,7 @@ public class SubscriberSender extends BaseRichSpout implements Serializable {
         this.collector = spoutOutputCollector;
         try {
             Generator gen = new Generator();
-            this.generatedSubs = gen.generateSubscription(subscriptionCount);
+            this.generatedSubs = gen.generateSubscription();
             this.subscriptionCount = this.generatedSubs.size();
         } catch (IOException e) {
             for (int i = 0; i < this.subscriptionCount; i++) {
