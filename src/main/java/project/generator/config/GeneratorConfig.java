@@ -10,7 +10,7 @@ public class GeneratorConfig {
 
     private long TotalNumberOfPubs;
     private long TotalNumberOfSubs;
-    private long DeltaSubsGenError;
+    private double DeltaSubsGenError;
     private List<ConfigObj> Fields;
 
     public GeneratorConfig() throws IOException {}
@@ -40,11 +40,11 @@ public class GeneratorConfig {
         TotalNumberOfSubs = totalNumberOfSubs;
     }
 
-    public long getDeltaSubsGenError() {
+    public double getDeltaSubsGenError() {
         return this.DeltaSubsGenError;
     }
 
-    public void setDeltaSubsGenError(long deltaSubsGenError) {
+    public void setDeltaSubsGenError(double deltaSubsGenError) {
         this.DeltaSubsGenError = deltaSubsGenError;
     }
 
