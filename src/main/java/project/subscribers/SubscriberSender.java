@@ -50,7 +50,7 @@ public class SubscriberSender extends BaseRichSpout implements Serializable {
     @Override
     public void nextTuple() {
         if(this.currentIndex < this.subscriptionCount){
-            this.collector.emit(new Values(new Subscription(generatedSubs.get(currentIndex)), this.subscriberReceiverId));
+            this.collector.emit(new Values(new Subscription(generatedSubs.get(currentIndex)).convertToModel().convertToProto(), this.subscriberReceiverId));
             this.currentIndex++;
         }
     }

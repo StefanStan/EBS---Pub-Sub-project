@@ -3,15 +3,16 @@ import backtype.storm.Config;
 import backtype.storm.LocalCluster;
 import backtype.storm.StormSubmitter;
 import backtype.storm.topology.BoltDeclarer;
-import backtype.storm.topology.SpoutDeclarer;
 import backtype.storm.topology.TopologyBuilder;
 import project.brokers.Broker;
 import project.generator.Generator;
+import project.generator.domain.generated.PublicationProtos;
+import project.generator.domain.generated.SubscriptionProtos;
 import project.publishers.Publisher;
 import project.subscribers.SubscriberReceiver;
 import project.subscribers.SubscriberSender;
-
-import java.io.File;
+import project.utils.PublicationSerialiser;
+import project.utils.SubscriptionSerialiser;
 
 /**
  * Created by Vasile Pojoga on 5/14/2017.
@@ -51,6 +52,8 @@ public class App {
 
         Config config = new Config();
         config.setNumWorkers(3);
+        config.registerSerialization(PublicationProtos.Publication.class, PublicationSerialiser.class);
+        config.registerSerialization(SubscriptionProtos.Subscription.class, SubscriptionSerialiser.class);
 
         boolean runRemote = false;
 

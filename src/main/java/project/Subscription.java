@@ -1,5 +1,6 @@
 package project;
 
+import project.generator.config.Operator;
 import project.generator.domain.MyPair;
 
 import java.io.Serializable;
@@ -37,5 +38,21 @@ public class Subscription implements Serializable {
         }
 
         return true;
+    }
+
+    public project.generator.domain.Subscription convertToModel() {
+        Map<String, MyPair> subFields = new HashMap<>();
+        for (SubscriptionField temp : fields) {
+            subFields.put(temp.field,new MyPair(Operator.parseString(temp.operator), temp.value));
+        }
+        return new project.generator.domain.Subscription(subFields);
+    }
+
+    public static Subscription fromModel(project.generator.domain.Subscription subscription) {
+        Subscription result = new Subscription();
+        for (Map.Entry<String, MyPair> temp : subscription.getFields().entrySet()) {
+            result.addField(temp.getKey(), temp.getValue().getOperator().toString(), temp.getValue().getOperand());
+        }
+        return result;
     }
 }

@@ -1,0 +1,15 @@
+syntax = "proto3";
+package tutorial;
+
+option java_package = "project.generator.domain.generated";
+option java_outer_classname = "SubscriptionProtos";
+
+message Subscription {
+    repeated SubscriptionDomain tuples = 1;
+}
+
+message SubscriptionDomain {
+    string name = 1;
+    string operator = 2;
+    bytes value = 3;
+}

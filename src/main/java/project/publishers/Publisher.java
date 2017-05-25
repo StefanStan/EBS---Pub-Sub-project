@@ -57,7 +57,7 @@ public class Publisher extends BaseRichSpout implements Serializable {
         Utils.sleep(5000);
         while(this.currentIndex < this.publicationCount){
             this.generatedPubs.get(currentIndex).getFields().put(PUBLICATION_DATE_TIME_FIELD_ID, LocalDateTime.now());
-            this.collector.emit(new Values(this.generatedPubs.get(currentIndex).getFields()));
+            this.collector.emit(new Values(this.generatedPubs.get(currentIndex).convert()));
             this.currentIndex++;
         }
     }

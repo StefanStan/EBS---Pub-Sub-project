@@ -5,6 +5,8 @@ import backtype.storm.task.TopologyContext;
 import backtype.storm.topology.OutputFieldsDeclarer;
 import backtype.storm.topology.base.BaseRichBolt;
 import backtype.storm.tuple.Tuple;
+import project.generator.domain.Publication;
+import project.generator.domain.generated.PublicationProtos;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -39,7 +41,7 @@ public class SubscriberReceiver extends BaseRichBolt implements Serializable {
 
     @Override
     public void execute(Tuple tuple) {
-        Object publication = tuple.getValueByField("publication");
+        Object publication = Publication.convert((PublicationProtos.Publication) tuple.getValueByField("publication")).getFields();
         if((publication != null) && (publication instanceof HashMap)){
             HashMap<String, Object> pub = (HashMap<String, Object>)publication;
             //Always add PUBLICATION_RECEIVED_DATE_TIME_FIELD_ID with current time as value to publications, for monitoring reasons!

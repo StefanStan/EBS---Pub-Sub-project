@@ -60,21 +60,21 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
-            <!--<plugin>-->
-                <!--<groupId>com.google.protobuf.tools</groupId>-->
-                <!--<artifactId>maven-protoc-plugin</artifactId>-->
-                <!--<configuration>-->
-                    <!--<protocExecutable>C:\Program Files (x86)\protoc-3.3.0-win32\bin\protoc</protocExecutable>-->
-                <!--</configuration>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<goals>-->
-                            <!--<goal>compile</goal>-->
-                            <!--<goal>testCompile</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
+            <plugin>
+                <groupId>com.google.protobuf.tools</groupId>
+                <artifactId>maven-protoc-plugin</artifactId>
+                <configuration>
+                    <protocExecutable>D:\protoc-3.3.0-win32\bin\protoc</protocExecutable>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>compile</goal>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
