@@ -25,6 +25,8 @@ public class Broker extends BaseRichBolt implements Serializable {
     private List<String> subscriberReceivers = new ArrayList<>();
     private int id;
 
+    public static long receivedSubs = 0;
+
     @Override
     public void prepare(Map map, TopologyContext topologyContext, OutputCollector outputCollector) {
         this.collector = outputCollector;
@@ -38,6 +40,7 @@ public class Broker extends BaseRichBolt implements Serializable {
         }
 
         if (tuple.getFields().contains("subscription")) {
+            incrementSubsReceived();
             Object subscription = Subscription.fromModel(project.generator.domain.Subscription.convertToProto((SubscriptionProtos.Subscription) tuple.getValueByField("subscription")));
             Object subscriberReceiverId = tuple.getValueByField("subscriberReceiverId");
             if ((subscription != null) && (subscription instanceof Subscription)) {
@@ -100,5 +103,9 @@ public class Broker extends BaseRichBolt implements Serializable {
         }
 
         return result;
+    }
+
+    public static synchronized void incrementSubsReceived() {
+        receivedSubs++;
     }
 }

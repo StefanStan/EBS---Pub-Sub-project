@@ -24,6 +24,7 @@ public class App {
     private static final String SUBSCRIPTION_FORWARD_ID = "subscription_forward";
     private static final String SUBSCRIBER_RECEIVER_BOLT_ID = "subscriber_receiver_";
     private static final String SUBSCRIBER_SENDER_SPOUT_ID = "subscriber_sender_";
+    public static final int SUBSCRIBERS_NUMBER = 3;
 
     public static void main( String[] args ) throws Exception {
         TopologyBuilder builder = new TopologyBuilder();
@@ -33,7 +34,7 @@ public class App {
         builder.setSpout(PUBLISHER_SPOUT_ID, publisher, 1);
         BoltDeclarer brokerBoltDeclarer = builder.setBolt(BROKER_BOLT_ID, broker, 3);
 
-        for(int i=1;i<=3;i++){
+        for(int i=1;i<=SUBSCRIBERS_NUMBER;i++){
             String subscriberReceiverBoltId = SUBSCRIBER_RECEIVER_BOLT_ID + Integer.toString(i);
             String subscriberSenderSpoutId = SUBSCRIBER_SENDER_SPOUT_ID + Integer.toString(i);
             SubscriberReceiver subscriberReceiver = new SubscriberReceiver(subscriberReceiverBoltId);

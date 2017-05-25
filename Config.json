@@ -1,6 +1,7 @@
 ﻿{
-	"TotalNumberOfPubs": "100",
-	"TotalNumberOfSubs": "10",
+	"TotalNumberOfPubs": "10000",
+	"TotalNumberOfSubs": "1000",
+	"DeltaSubsGenError": "0.85",
 	"Fields":
 	[
 		{

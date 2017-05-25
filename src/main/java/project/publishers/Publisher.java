@@ -7,6 +7,8 @@ import backtype.storm.topology.base.BaseRichSpout;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Values;
 import backtype.storm.utils.Utils;
+import project.App;
+import project.brokers.Broker;
 import project.generator.Generator;
 import project.generator.domain.Publication;
 
@@ -54,11 +56,20 @@ public class Publisher extends BaseRichSpout implements Serializable {
 
     @Override
     public void nextTuple() {
-        Utils.sleep(5000);
-        while(this.currentIndex < this.publicationCount){
-            this.generatedPubs.get(currentIndex).getFields().put(PUBLICATION_DATE_TIME_FIELD_ID, LocalDateTime.now());
-            this.collector.emit(new Values(this.generatedPubs.get(currentIndex).convert()));
-            this.currentIndex++;
+        try {
+            if(this.currentIndex < this.publicationCount) {
+                Generator gen = new Generator();
+                while (Broker.receivedSubs < (gen.getConfig().getTotalNumberOfSubs() * App.SUBSCRIBERS_NUMBER) * gen.getConfig().getDeltaSubsGenError()) {
+                    Utils.sleep(1000);
+                }
+            }
+            while(this.currentIndex < this.publicationCount){
+                this.generatedPubs.get(currentIndex).getFields().put(PUBLICATION_DATE_TIME_FIELD_ID, LocalDateTime.now());
+                this.collector.emit(new Values(this.generatedPubs.get(currentIndex).convert()));
+                this.currentIndex++;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
