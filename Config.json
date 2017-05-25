@@ -1,6 +1,6 @@
 ﻿{
-	"TotalNumberOfPubs": "10",
-	"TotalNumberOfSubs": "1",
+	"TotalNumberOfPubs": "30000",
+	"TotalNumberOfSubs": "30000",
 	"Fields":
 	[
 		{
@@ -26,7 +26,7 @@
 				"Start": "1900-01-01T00:00:00",
 				"End": "2017-01-01T00:00:00"
 			},
-			"FrequencyInSubscriptions": "0",
+			"FrequencyInSubscriptions": "60",
 			"OperationsFrequency":
 			{
 				"LTE": "60",
@@ -42,7 +42,7 @@
 				"Start": "1.20",
 				"End": "2.10"
 			},
-			"FrequencyInSubscriptions": "0",
+			"FrequencyInSubscriptions": "40",
 			"OperationsFrequency":
 			{
 				"GTE": "100"
@@ -56,7 +56,7 @@
 				"Source": "File",
 				"Path": "Colors.txt"
 			},
-			"FrequencyInSubscriptions": "0",
+			"FrequencyInSubscriptions": "30",
 			"OperationsFrequency":
 			{
 				"EQ": "100"
@@ -71,7 +71,7 @@
 				"Start": "30",
 				"End": "150"
 			},
-			"FrequencyInSubscriptions": "0",
+			"FrequencyInSubscriptions": "50",
 			"OperationsFrequency":
 			{
 				"GTE": "85",
