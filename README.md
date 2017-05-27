@@ -63,7 +63,7 @@ logviewer    ->      nohup /home/storm/apache-storm-0.9.5/bin/storm logviewer > 
 
 To upload a topology (do this while connected to nimbus machine, master node)
 
-/home/storm/apache-storm-0.9.5/bin/storm jar /home/storm/proiect/ebs-labs-example.jar example.App ebs-labs-count-topology
+/home/storm/apache-storm-0.9.5/bin/storm jar /home/storm/project/EBS---Pub-Sub-project/out/artifacts/project_jar/project.jar project.App true
 
 ---------------------------------------------------------------------------------------------------------
 
